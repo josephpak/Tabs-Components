@@ -3,10 +3,17 @@ class Tab {
   constructor(element) {
   // Assigning this.element to the passed in DOM element
   this.element = element;
+  
+  this.linkElement = new TabLink(this.element);
+  // Using the Item element, create a new instance of the TabItem class
 
-  this.tabLink = new TabLink(this.element);
-  this.element.addEventListener("click", e => console.log("Hello"))
-  }
+  this.element.addEventListener("click", e => {
+    document.querySelectorAll(".tabs-link").forEach(tab => tab.classList.remove("tabs-link-selected"));
+    document.querySelectorAll(".tabs-item").forEach(tab => tab.classList.remove("tabs-item-selected"));
+    this.linkElement.select();
+  });
+  
+}
 }
 
 class TabLink {
@@ -38,11 +45,13 @@ class TabLink {
     this.element.classList.add("tabs-link-selected");
     
     // Call the select method on the item associated with this link
-    // this.tabItem.select();
+    this.tabItem.select();
   }
 
   deselect() {
     this.element.classList.remove("tabs-link-selected");
+
+    this.tabItem.deselect();
   }
 }
 
@@ -80,4 +89,4 @@ class TabItem {
 
 */
 
-links = document.querySelectorAll(".tabs-link").forEach(link => new Tab(link))
+tabs = document.querySelectorAll(".tabs-link").forEach(tab => new Tab(tab))
